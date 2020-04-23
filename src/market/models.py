@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from datetime import datetime
+from django.utils import timezone
 
 
 class Category(models.Model):
@@ -13,8 +13,8 @@ class Category(models.Model):
 class Item(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     name = models.CharField(max_length=100, unique=True)
-    price = models.IntegerField(max_length=1000000, default=0)
-    quanity = models.IntegerField(max_length=1000000, default=0)
+    price = models.IntegerField(default=0)
+    quanity = models.IntegerField(default=0)
     picture = models.ImageField(upload_to='item_image', blank=True)
     is_removed = models.BooleanField(default=False)
 
@@ -24,7 +24,7 @@ class Item(models.Model):
 
 class Administrator(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    registrated_at = models.DateTimeField(default=datetime.now())
+    registrated_at = models.DateTimeField(default=timezone.now)
     avatar = models.ImageField(upload_to='profile_images', blank=True)
 
     def __repr__(self):
@@ -33,7 +33,7 @@ class Administrator(models.Model):
 
 class Customer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    registrated_at = models.DateTimeField()
+    registrated_at = models.DateTimeField(default=timezone.now)
     avatar = models.ImageField(upload_to='profile_images', blank=True)
 
     def __repr__(self):
@@ -52,8 +52,8 @@ class Stock(models.Model):
 class MyBug(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
-    buy_time = models.DateTimeField(default=datetime.now())
+    buy_time = models.DateTimeField(default=timezone.now)
 
     def __repr__(self):
-        return "{} {} {}".format(self.customer, self.item, self.name)
+        return "{} {} {}".format(self.customer, self.item, self.buy_time)
 

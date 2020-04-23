@@ -11,7 +11,7 @@ class StockAdmin(admin.ModelAdmin):
 
 
 class MyBugAdmin(admin.ModelAdmin):
-    list_display = ('customer', 'item', 'name')
+    list_display = ('customer', 'item', 'buy_time')
 
 
 class AdministratorAdmin(admin.ModelAdmin):
