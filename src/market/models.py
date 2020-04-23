@@ -18,3 +18,21 @@ class Item(models.Model):
 
     def __repr__(self):
         return "{} {} {} {} {}".format(self.category, self.name, self.price, self.quanity, self.picture)
+
+
+class Stock(models.Model):
+    administrator = models.ForeignKey(Administrator, on_delete=models.CASCADE)
+    item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100, unique=True)
+
+    def __repr__(self):
+        return "{} {} {}".format(self.administrator, self.item, self.name)
+
+
+class MyBug(models.Model):
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100, unique=True)
+
+    def __repr__(self):
+        return "{} {} {}".format(self.customer, self.item, self.name)
