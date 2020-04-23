@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Category(models.Model):
@@ -20,6 +21,24 @@ class Item(models.Model):
         return "{} {} {} {} {}".format(self.category, self.name, self.price, self.quanity, self.picture)
 
 
+class Administrator(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    registrated_at = models.DateTimeField()
+    avatar = models.ImageField(upload_to='profile_images', blank=True)
+
+    def __str__(self):
+        return self.user.username
+
+
+class Customer(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    registrated_at = models.DateTimeField()
+    avatar = models.ImageField(upload_to='profile_images', blank=True)
+
+    def __str__(self):
+        return self.user.username
+
+
 class Stock(models.Model):
     administrator = models.ForeignKey(Administrator, on_delete=models.CASCADE)
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
@@ -36,3 +55,4 @@ class MyBug(models.Model):
 
     def __repr__(self):
         return "{} {} {}".format(self.customer, self.item, self.name)
+
