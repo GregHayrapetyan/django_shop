@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+from datetime import datetime
 
 
 class Category(models.Model):
@@ -15,7 +16,7 @@ class Item(models.Model):
     name = models.CharField(max_length=100, unique=True)
     price = models.IntegerField(default=0)
     quanity = models.IntegerField(default=0)
-    picture = models.ImageField(upload_to='item_image', blank=True)
+    picture = models.ImageField(upload_to='item_images', blank=True)
     is_removed = models.BooleanField(default=False)
 
     def __repr__(self):
@@ -24,8 +25,8 @@ class Item(models.Model):
 
 class Administrator(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    registrated_at = models.DateTimeField(default=timezone.now)
-    avatar = models.ImageField(upload_to='profile_images', blank=True)
+    registrated_at = models.DateTimeField(default=datetime.now)
+    avatar = models.ImageField(upload_to='admin_profile_images', blank=True)
 
     def __repr__(self):
         return self.user.username
@@ -33,8 +34,8 @@ class Administrator(models.Model):
 
 class Customer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    registrated_at = models.DateTimeField(default=timezone.now)
-    avatar = models.ImageField(upload_to='profile_images', blank=True)
+    registrated_at = models.DateTimeField(default=datetime.now)
+    avatar = models.ImageField(upload_to='customer_profile_images', blank=True)
 
     def __repr__(self):
         return self.user.username
@@ -52,8 +53,7 @@ class Stock(models.Model):
 class MyBug(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
-    buy_time = models.DateTimeField(default=timezone.now)
+    buy_time = models.DateTimeField(default=datetime.now)
 
     def __repr__(self):
         return "{} {} {}".format(self.customer, self.item, self.buy_time)
-

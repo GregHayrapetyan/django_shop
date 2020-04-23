@@ -15,7 +15,6 @@ class ItemForm(forms.ModelForm):
     name = forms.CharField(max_length=100, help_text="Please enter the name of the Item.")
     price = forms.IntegerField(max_value=1000000, help_text="Please enter the price of the Item.")
     quanity = forms.IntegerField(max_value=1000000, help_text="Please enter the quanity of the Item.")
-    picture = forms.ImageField(upload_to='item_image', blank=True)
     is_removed = forms.BooleanField(widget=forms.HiddenInput(), initial=0)
 
     class Meta:
@@ -40,7 +39,7 @@ class AdministratorForm(forms.ModelForm):
 class CustomerForm(forms.ModelForm):
     class Meta:
         model = Customer
-        fields = ('avatar', )
+        fields = ('avatar',)
 
 
 class StockForm(forms.ModelForm):
